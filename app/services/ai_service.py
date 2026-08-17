@@ -2,6 +2,7 @@ import json
 from google import genai
 from app.config import settings
 
+
 class AIService:
     def __init__(self):
         self.client = genai.Client(api_key=settings.GEMINI_API_KEY)

@@ -1,5 +1,6 @@
 import uuid
 
+
 class AsyncDatabase:
     def __init__(self):
         self._db = {}
@@ -12,5 +13,6 @@ class AsyncDatabase:
 
     async def get_all(self) -> list:
         return list(self._db.values())
+
 
 db = AsyncDatabase()
