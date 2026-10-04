@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+
+from app.database import db
 from app.models import AppointmentRequest, AppointmentResponse, AppointmentStats
 from app.services.ai_service import AIService
-from app.database import db
 
 app = FastAPI(title="PsicoTurnos MVP API")
 ai_service = AIService()
@@ -9,7 +10,10 @@ ai_service = AIService()
 
 @app.get("/")
 async def root():
-    return {"status": "ok", "message": "API de Reserva de Turnos de Psicomotricidad operativa"}
+    return {
+        "status": "ok",
+        "message": "API de Reserva de Turnos de Psicomotricidad operativa",
+    }
 
 
 @app.post("/appointments/", response_model=AppointmentResponse)
@@ -19,7 +23,7 @@ async def create_appointment(request: AppointmentRequest):
     full_data = {
         "patient_name": request.patient_name,
         "notes": request.notes,
-        **extracted_data
+        **extracted_data,
     }
 
     saved_record = await db.save_appointment(full_data)
@@ -36,5 +40,5 @@ async def get_appointment_stats():
 
     return AppointmentStats(
         total_appointments=len(appointments),
-        consultation_types_count=types_count
+        consultation_types_count=types_count,
     )
