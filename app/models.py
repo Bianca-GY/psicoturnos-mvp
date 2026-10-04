@@ -2,8 +2,19 @@ from pydantic import BaseModel, Field
 
 
 class AppointmentRequest(BaseModel):
-    patient_name: str = Field(..., example="Lucas Gómez")
-    notes: str = Field(..., example="Necesito turno de psicomotricidad para mi hijo por reeducación motriz los martes a la tarde")
+    patient_name: str = Field(
+        ...,
+        json_schema_extra={"example": "Lucas Gómez"},
+    )
+    notes: str = Field(
+        ...,
+        json_schema_extra={
+            "example": (
+                "Necesito turno de psicomotricidad para mi hijo por "
+                "reeducación motriz los martes a la tarde"
+            )
+        },
+    )
 
 
 class AppointmentResponse(BaseModel):
